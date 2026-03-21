@@ -1,0 +1,63 @@
+/* Problem: BST Insert
+
+Implement the solution for this problem.
+
+Input:
+- Input specifications */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+};
+
+struct Node* newNode(int data) {
+    struct Node* node = (struct Node*)malloc(sizeof(struct Node));
+    node->data = data;
+    node->left = NULL;
+    node->right = NULL;
+    return node;
+}
+
+// BST Insert
+struct Node* insert(struct Node* root, int key) {
+    if (root == NULL)
+        return newNode(key);
+
+    if (key < root->data)
+        root->left = insert(root->left, key);
+    else if (key > root->data)
+        root->right = insert(root->right, key);
+
+    return root;
+}
+
+// Inorder (to verify BST)
+void inorder(struct Node* root) {
+    if (root) {
+        inorder(root->left);
+        printf("%d ", root->data);
+        inorder(root->right);
+    }
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    struct Node* root = NULL;
+
+    for (int i = 0; i < n; i++) {
+        int x;
+        scanf("%d", &x);
+        root = insert(root, x);
+    }
+
+    printf("Inorder Traversal: ");
+    inorder(root);
+
+    return 0;
+}
